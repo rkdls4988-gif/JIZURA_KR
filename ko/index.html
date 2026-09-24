@@ -203,7 +203,7 @@ label.check { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8
 label.check input { margin: 3px 0 0; flex: none; accent-color: var(--amber); }
 label.check small { display: block; font-size: 11px; color: var(--muted); }
 
-/* ---------- modes / おまかせ ---------- */
+/* ---------- modes / 자동 생성 / 랜덤 추천 (R) ---------- */
 .modes { display: inline-flex; border: 1px solid var(--line2); border-radius: var(--r); overflow: hidden; }
 .modes button { border: 0; border-radius: 0; background: transparent; padding: 6px 14px; color: var(--muted); }
 .modes button + button { border-left: 1px solid var(--line2); }
@@ -314,7 +314,7 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
       <input id="songArtist" type="text" placeholder="アーティスト" aria-label="アーティスト">
     </div>
     <div class="modes" role="group" aria-label="表示モード">
-      <button id="modeEasy" aria-pressed="false" title="おまかせボタン中心のシンプルな画面">かんたん</button>
+      <button id="modeEasy" aria-pressed="false" title="자동 생성 / 랜덤 추천 (R)ボタン中心のシンプルな画面">かんたん</button>
       <button id="modePro" aria-pressed="true" title="すべての設定を表示">詳細</button>
     </div>
    <div class="lang-switch">
@@ -325,7 +325,7 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
     <div class="acts">
       <label class="file" title="保存したプロジェクト(.json)を開く">開く<input id="fileProject" type="file" accept=".json,application/json"></label>
       <button id="btnSave" title="プロジェクトを .json で保存">保存</button>
-      <button id="btnAE" title="After Effects パネル用の構成データを書き出す">AE用に書き出し</button>
+      <button id="btnAE" title="After Effects パネル用の構成データを書き出す">AE用に내보내기 (Export)</button>
       <button id="btnTerms" class="ghost terms-open" title="出力物の権利とライセンス">利用について</button>
     </div>
   </header>
@@ -341,7 +341,7 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
           <ul>
             <li>1行が1フレーズ。空行は少し間を空けます</li>
             <li><code>夜明けの色を/覚えてる</code> … <code>/</code> でカットの切れ目を指定</li>
-            <li><code>*透明*</code> … 強調（大きく・インパクト寄りの演出）</li>
+            <li><code>*透明*</code> … 強調（大きく・インパクト寄りの연출 설정）</li>
             <li>行末の <code>!</code> … フラッシュと揺れを入れる</li>
             <li><code>歌詞|ruby or note</code> … 注釈レイアウトの小さな文字</li>
             <li><code>[01:23.45]歌詞</code> … LRC のタイムスタンプをそのまま使用</li>
@@ -351,7 +351,7 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
       </div>
 
       <div class="sec">
-        <div class="sec-h"><h2>曲とタイミング</h2></div>
+        <div class="sec-h"><h2>음원 및 타이밍 동기화</h2></div>
         <div id="audioName" class="muted audio-name">曲なし（読み込むと拍を検出してカットを合わせます）</div>
         <div class="row">
           <label class="file" title="mp3 / wav / m4a など">曲を読み込む<input id="audioFile" type="file" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac"></label>
@@ -388,32 +388,32 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
         <span id="timeNow" class="tc">00:00.00</span><span class="tc muted">/</span><span id="timeDur" class="tc muted">00:00.00</span>
         <input id="scrub" type="range" min="0" max="10000" value="0" aria-label="再生位置">
         <button id="btnLoop" class="ghost small" aria-pressed="true">ループ</button>
-        <span class="vol"><button id="btnMute" class="ghost small" aria-pressed="false" title="クリックで消音／解除（プレビューだけ。書き出しの音量は変わりません）">音量</button><input id="vol" type="range" min="0" max="100" value="80" aria-label="プレビューの音量"></span>
+        <span class="vol"><button id="btnMute" class="ghost small" aria-pressed="false" title="クリックで消音／解除（プレビューだけ。내보내기 (Export)の音量は変わりません）">音量</button><input id="vol" type="range" min="0" max="100" value="80" aria-label="プレビューの音量"></span>
         <span class="hist-btns">
           <button id="btnPrev" class="ghost small icon-txt" title="前の案に戻る" aria-label="前の案">◀</button>
           <button id="btnNext" class="ghost small icon-txt" title="次の案へ進む" aria-label="次の案">▶</button>
         </span>
         <button id="btnShuffle" class="accent" title="設定はそのままで構成だけ再抽選（ロックした行は維持）">シャッフル</button>
-        <button id="btnOmakase" class="primary" title="スタイル・雰囲気・演出・配色をまるごとランダムに（キー R）">おまかせ</button>
+        <button id="btnOmakase" class="primary" title="스타일 (색상/폰트 팩)・雰囲気・연출 설정・配色をまるごとランダムに（キー R）">자동 생성 / 랜덤 추천 (R)</button>
       </div>
       <canvas id="timeline" aria-label="タイムライン（クリックで移動）"></canvas>
       <div class="cutinfo" id="cutInfo"></div>
     </section>
 
     <!-- ================= right: look & output ================= -->
-    <section class="col col-right" aria-label="スタイルと書き出し">
+    <section class="col col-right" aria-label="스타일 (색상/폰트 팩)と내보내기 (Export)">
       <div id="easyPanel" class="easy" hidden>
         <div class="easy-hero">
-          <button id="btnOmakaseBig" class="omakase">おまかせで作る</button>
-          <p class="hint">押すたびに、スタイル・雰囲気・動き・配色・構成がまるごと変わります。キーボードの <span class="kbd">R</span> でも実行できます。</p>
+          <button id="btnOmakaseBig" class="omakase">자동 생성 / 랜덤 추천 (R)で作る</button>
+          <p class="hint">押すたびに、스타일 (색상/폰트 팩)・雰囲気・動き・配色・構成がまるごと変わります。キーボードの <span class="kbd">R</span> でも実行できます。</p>
           <div class="hist-row">
             <button id="btnPrev2" class="ghost">◀ 前の案</button>
             <span id="histPos" class="muted mono"></span>
             <button id="btnNext2" class="ghost">次の案 ▶</button>
           </div>
           <div class="pick-sets">
-            <label class="check"><input id="eExtra" class="extra-toggle" type="checkbox"><span>追加分の演出も使う<small>最初の公開版のあとに追加した約350の演出・配色セット12・書体6も、おまかせやシャッフルの候補にします（オフのときは最初の公開版の演出だけ）</small></span></label>
-            <label class="check"><input id="eWa" class="wa-toggle" type="checkbox" checked><span>和風の演出も使う<small>提灯・はがき・障子・扇・家紋・青海波・桜の花びらなどの和風グラフィック。オフにすると、おまかせやシャッフルで選ばれません</small></span></label>
+            <label class="check"><input id="eExtra" class="extra-toggle" type="checkbox"><span>追加分の연출 설정も使う<small>最初の公開版のあとに追加した約350の연출 설정・配色セット12・書体6も、자동 생성 / 랜덤 추천 (R)やシャッフルの候補にします（オフのときは最初の公開版の연출 설정だけ）</small></span></label>
+            <label class="check"><input id="eWa" class="wa-toggle" type="checkbox" checked><span>和風の연출 설정も使う<small>提灯・はがき・障子・扇・家紋・青海波・桜の花びらなどの和風グラフィック。オフにすると、자동 생성 / 랜덤 추천 (R)やシャッフルで選ばれません</small></span></label>
           </div>
         </div>
         <div class="easy-sec">
@@ -423,22 +423,22 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
         <div class="easy-sec">
           <h3>ここだけ変える</h3>
           <div class="easy-grid">
-            <button id="eStyle" title="スタイルだけ別のものに">スタイル</button>
+            <button id="eStyle" title="스타일 (색상/폰트 팩)だけ別のものに">스타일 (색상/폰트 팩)</button>
             <button id="ePalette" title="アクセント・ズレ色A/Bをランダムに">配色</button>
-            <button id="eMood" title="動き・グリッチ・使う手法の雰囲気だけ">雰囲気</button>
+            <button id="eMood" title="動き・グリッチ・使う표현 기법 (부품 라이브러리)の雰囲気だけ">雰囲気</button>
             <button id="eCut" title="レイアウトと動きの組み合わせだけ">構成</button>
           </div>
         </div>
         <div class="easy-sec">
-          <h3>書き出し</h3>
+          <h3>내보내기 (Export)</h3>
           <div class="fields">
             <label class="field">画面比<select id="eAspect"><option value="16:9">16:9</option><option value="9:16">9:16 縦</option><option value="4:3">4:3</option><option value="3:4">3:4 縦</option><option value="1:1">1:1</option><option value="4:5">4:5 縦</option><option value="21:9">21:9</option></select></label>
             <label class="field">解像度<select id="eRes"><option value="720">720p</option><option value="1080">1080p</option><option value="1440">1440p</option><option value="2160">4K</option></select></label>
             <label class="field">fps<select id="eFps"><option>24</option><option>30</option><option>60</option></select></label>
-            <label class="field field-wide">背景<select id="eKey"><option value="off">通常（スタイルの背景）</option><option value="green">グリーンバック（合成用）</option><option value="black">ブラックバック（合成用）</option></select></label>
+            <label class="field field-wide">背景<select id="eKey"><option value="off">通常（스타일 (색상/폰트 팩)の背景）</option><option value="green">グリーンバック（合成用）</option><option value="black">ブラックバック（合成用）</option></select></label>
           </div>
           <div class="outbtns"><button id="eMP4" class="primary">MP4 を書き出す</button></div>
-          <button class="terms-open linkish">書き出した動画の権利について</button>
+          <button class="terms-open linkish">내보내기 (Export)た動画の権利について</button>
           <div class="exp-box" hidden>
             <div class="progress"><i class="exp-bar"></i></div>
             <div class="row" style="justify-content:space-between;margin-top:6px"><span class="exp-text muted mono">—</span><button class="exp-cancel ghost small">中止</button></div>
@@ -446,10 +446,10 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
         </div>
       </div>
       <nav class="tabs" role="tablist">
-        <button role="tab" data-tab="style" aria-selected="true">スタイル</button>
-        <button role="tab" data-tab="fx" aria-selected="false">演出</button>
-        <button role="tab" data-tab="tech" aria-selected="false">手法</button>
-        <button role="tab" data-tab="out" aria-selected="false">書き出し</button>
+        <button role="tab" data-tab="style" aria-selected="true">스타일 (색상/폰트 팩)</button>
+        <button role="tab" data-tab="fx" aria-selected="false">연출 설정</button>
+        <button role="tab" data-tab="tech" aria-selected="false">표현 기법 (부품 라이브러리)</button>
+        <button role="tab" data-tab="out" aria-selected="false">내보내기 (Export)</button>
       </nav>
 
       <div class="tabpane" data-pane="style">
@@ -480,7 +480,7 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
           <label class="row" style="gap:6px">コマ打ち <select id="fxKoma" title="動きを何枚/秒で描くか（出力fpsとは別）"><option value="0">フル（出力fpsのまま）</option><option value="12">2コマ打ち（12枚/秒）</option><option value="8">3コマ打ち（8枚/秒）</option></select></label>
         </div>
         <div class="fields" style="margin-top:12px">
-          <label class="field">HUD<select id="fxHud"><option value="auto">スタイル次第</option><option value="on">常に表示</option><option value="off">表示しない</option></select></label>
+          <label class="field">HUD<select id="fxHud"><option value="auto">스타일 (색상/폰트 팩)次第</option><option value="on">常に表示</option><option value="off">表示しない</option></select></label>
           <label class="field">シード<input id="seed" type="number" step="1"></label>
           <label class="field">&nbsp;<button id="btnSeed" class="ghost">新しいシード</button></label>
         </div>
@@ -489,10 +489,10 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
 
       <div class="tabpane" data-pane="tech" hidden>
         <div class="pick-sets">
-          <label class="check"><input id="tExtra" class="extra-toggle" type="checkbox"><span>追加分の演出も使う<small>「追加」印の手法・スタイル・書体。オフのときは、おまかせやシャッフルで最初の公開版の演出だけを使います</small></span></label>
-          <label class="check"><input id="tWa" class="wa-toggle" type="checkbox" checked><span>和風の演出も使う<small>「和」印の手法とスタイル。オフにすると、おまかせやシャッフルでは選ばれません（追加分の判定のあとに適用。行ごとに手動で指定した場合は使えます）</small></span></label>
+          <label class="check"><input id="tExtra" class="extra-toggle" type="checkbox"><span>追加分の연출 설정も使う<small>「追加」印の표현 기법 (부품 라이브러리)・스타일 (색상/폰트 팩)・書体。オフのときは、자동 생성 / 랜덤 추천 (R)やシャッフルで最初の公開版の연출 설정だけを使います</small></span></label>
+          <label class="check"><input id="tWa" class="wa-toggle" type="checkbox" checked><span>和風の연출 설정も使う<small>「和」印の표현 기법 (부품 라이브러리)と스타일 (색상/폰트 팩)。オフにすると、자동 생성 / 랜덤 추천 (R)やシャッフルでは選ばれません（追加分の判定のあとに適用。行ごとに手動で指定した場合は使えます）</small></span></label>
         </div>
-        <div class="row" style="margin-bottom:10px"><input id="techFilter" type="text" placeholder="手法を名前で絞り込み" style="flex:1" aria-label="手法を名前で絞り込み"><span id="techTotal" class="muted mono"></span></div>
+        <div class="row" style="margin-bottom:10px"><input id="techFilter" type="text" placeholder="표현 기법 (부품 라이브러리)を名前で絞り込み" style="flex:1" aria-label="표현 기법 (부품 라이브러리)を名前で絞り込み"><span id="techTotal" class="muted mono"></span></div>
         <div id="techLists"></div>
       </div>
 
@@ -502,22 +502,22 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
           <label class="field">解像度<select id="outRes"><option value="720">720p</option><option value="1080">1080p</option><option value="1440">1440p</option><option value="2160">4K</option></select></label>
           <label class="field">fps<select id="outFps"><option>24</option><option>30</option><option>60</option></select></label>
           <label class="field">画質<select id="outQuality"><option value="standard">標準</option><option value="high">高</option><option value="max">最高</option></select></label>
-          <label class="field field-wide">背景<select id="outKey"><option value="off">通常（スタイルの背景）</option><option value="green">グリーンバック（合成用）</option><option value="black">ブラックバック（合成用）</option></select></label>
+          <label class="field field-wide">背景<select id="outKey"><option value="off">通常（스타일 (색상/폰트 팩)の背景）</option><option value="green">グリーンバック（合成用）</option><option value="black">ブラックバック（合成用）</option></select></label>
         </div>
-        <p class="note key-note">グリーンバック／ブラックバックにすると、白い文字と演出だけを単色の背景の上に描きます（背景の模様・紙の質感・粒子・周辺減光は入りません）。プレビューにもそのまま反映されます。グリーンバックは動画編集ソフトのクロマキーで、ブラックバックは「スクリーン」合成や輝度キーで抜いて、別の映像の上に重ねられます。</p>
+        <p class="note key-note">グリーンバック／ブラックバックにすると、白い文字と연출 설정だけを単色の背景の上に描きます（背景の模様・紙の質感・粒子・周辺減光は入りません）。プレビューにもそのまま反映されます。グリーンバックは動画編集ソフトのクロマキーで、ブラックバックは「スクリーン」合成や輝度キーで抜いて、別の映像の上に重ねられます。</p>
         <label class="row" style="gap:6px;margin-top:10px"><input id="outAudio" type="checkbox" checked> 曲を動画に含める</label>
         <div class="outbtns">
           <button id="btnMP4" class="primary">MP4 を書き出す</button>
           <button id="btnPNG">連番PNG（ZIP）</button>
           <button id="btnPNGA">透過PNG（ZIP・背景なし）</button>
-          <button id="btnPNGL" title="後景（背景のグラフィックと歌詞の後ろの装飾）と前景（歌詞とその装飾・ゴースト）を、別々のフォルダ（back / front）に透過PNGで書き出します。画面全体の演出は両方にかかるので、前景を後景の上に重ねると通常の見た目になります">透過PNG 前景／後景（ZIP）</button>
+          <button id="btnPNGL" title="後景（背景のグラフィックと歌詞の後ろの装飾）と前景（歌詞とその装飾・ゴースト）を、別々のフォルダ（back / front）に透過PNGで내보내기 (Export)ます。画面全体の연출 설정は両方にかかるので、前景を後景の上に重ねると通常の見た目になります">透過PNG 前景／後景（ZIP）</button>
         </div>
         <div class="exp-box" hidden style="margin-top:12px">
           <div class="progress"><i class="exp-bar"></i></div>
           <div class="row" style="justify-content:space-between;margin-top:6px"><span class="exp-text muted mono">—</span><button class="exp-cancel ghost small">中止</button></div>
         </div>
-        <button class="terms-open linkish" style="margin-top:10px">書き出した動画・画像の権利とライセンスについて</button>
-        <p class="note" id="codecNote">書き出しはこのブラウザの中で行われます（Chrome / Edge 推奨）。</p>
+        <button class="terms-open linkish" style="margin-top:10px">내보내기 (Export)た動画・画像の権利とライセンスについて</button>
+        <p class="note" id="codecNote">내보내기 (Export)はこのブラウザの中で行われます（Chrome / Edge 推奨）。</p>
       </div>
     </section>
   </main>
@@ -534,7 +534,7 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
     <p><a href="https://github.com/852wa/JIZURA" target="_blank" rel="noopener">https://github.com/852wa/JIZURA</a></p>
     <p class="muted terms-note">入力した歌詞や曲は、このブラウザの中だけで処理され、サーバーには送信されません。</p>
     <details class="terms-oss"><summary>使用しているオープンソース</summary>
-      <p>MP4 書き出し：mp4-muxer（MIT License）<br>フォント：Google Fonts 配布の各書体（SIL Open Font License 1.1）</p>
+      <p>MP4 내보내기 (Export)：mp4-muxer（MIT License）<br>フォント：Google Fonts 配布の各書体（SIL Open Font License 1.1）</p>
     </details>
     <div class="terms-foot"><span class="muted mono">© 2026 hakoniwa · MIT</span><button value="close" class="primary" autofocus>閉じる</button></div>
   </form>
@@ -2126,7 +2126,7 @@ J.register = (group, key, def, pack) => {
 };
 J.registerAll = (group, defs, pack) => { for (const k of Object.keys(defs)) J.register(group, k, defs[k], pack); };
 
-/* items whose tags include a mood key (used by おまかせ) */
+/* items whose tags include a mood key (used by 자동 생성 / 랜덤 추천 (R)) */
 J.taggedWith = (group, mood) => J.order(group).filter(k => { const d = J.registry(group)[k]; return d && d.tags && d.tags.includes(mood); });
 })();
 
@@ -3556,7 +3556,7 @@ J.outputSize = (project) => {
 })();
 
 /* ============================================================
-   JIZURA — おまかせ (randomise everything into a coherent mood)
+   JIZURA — 자동 생성 / 랜덤 추천 (R) (randomise everything into a coherent mood)
    Each call rolls a mood, a style, effect strengths, a technique
    subset, fonts, colours and a new seed. Lyrics / timing / output
    settings and locked lines are left untouched.
@@ -28899,7 +28899,7 @@ trReg('pixelate', { name: 'モザイク転換', tags: ['glitch', 'pop'], w: 0.6,
    JIZURA — which entries random picks may use
    1) 追加分 (extra): everything added after the first public
       version (356 parts, 12 styles). Random picks (planner /
-      おまかせ / シャッフル) use the first version's set unless
+      자동 생성 / 랜덤 추천 (R) / シャッフル) use the first version's set unless
       project.extra === true.
    2) 和風 (wa): entries built around a traditional Japanese object,
       pattern or motif. Applied after (1): with project.wa === false
@@ -29005,7 +29005,7 @@ function mergeProject(p) {
   return o;
 }
 function setBadges(d) {
-  return (d && d.extra ? '<span class="set-badge ex" title="最初の公開版のあとに追加">追加</span>' : '') + (d && d.wa ? '<span class="set-badge" title="和風の演出">和</span>' : '');
+  return (d && d.extra ? '<span class="set-badge ex" title="最初の公開版のあとに追加">追加</span>' : '') + (d && d.wa ? '<span class="set-badge" title="和風の연출 설정">和</span>' : '');
 }
 function loadLocal() { try { const s = localStorage.getItem(LS_KEY); if (s) return mergeProject(JSON.parse(s)); } catch (e) {} return mergeProject(null); }
 let saveTimer = 0;
@@ -29274,7 +29274,7 @@ function drawStyleGrid() {
     b.setAttribute('aria-pressed', S.project.style === k ? 'true' : 'false');
     const off = !J.randomOk(S.project, 'style', k);
     b.classList.toggle('set-off', off);
-    b.title = st.desc + (off ? (st.extra && S.project.extra !== true ? '（追加分がオフのため、おまかせでは選ばれません）' : '（和風の演出がオフのため、おまかせでは選ばれません）') : '');
+    b.title = st.desc + (off ? (st.extra && S.project.extra !== true ? '（追加分がオフのため、자동 생성 / 랜덤 추천 (R)では選ばれません）' : '（和風の연출 설정がオフのため、자동 생성 / 랜덤 추천 (R)では選ばれません）') : '');
     x.fillStyle = sc.bg; x.fillRect(0, 0, 192, 108);
     st.schemes.slice(1, 4).forEach((s2, i) => { x.fillStyle = s2.bg; x.fillRect(192 - 14 * (i + 1), 0, 14, 10); });
     const f = st.fonts.display[0];
@@ -29287,7 +29287,7 @@ function drawStyleGrid() {
   });
 }
 function fontSelectOptions(sel) {
-  return '<option value="">スタイルの既定</option>' + Object.entries(J.FONTS).map(([k, f]) => {
+  return '<option value="">스타일 (색상/폰트 팩)の既定</option>' + Object.entries(J.FONTS).map(([k, f]) => {
     const g = J.faceOf ? J.faceOf(k) : f, alt = g.label && g.label !== f.label ? ' → ' + g.label : '';   // the face actually used for the lyric language
     return `<option value="${k}" ${sel === k ? 'selected' : ''}>${escapeHtml(f.label + alt)}</option>`;
   }).join('');
@@ -29377,7 +29377,7 @@ function updateHist() {
   $('histPos').textContent = H.list.length > 1 ? `${H.i + 1} / ${H.list.length}` : '';
 }
 
-/* ---------------- おまかせ ---------------- */
+/* ---------------- 자동 생성 / 랜덤 추천 (R) ---------------- */
 function restartPreview() { seek(0); if (!S.playing && S.mode === 'easy') play(); }
 function omakase() {
   if (S.exporting || S.tap) return;
@@ -29385,7 +29385,7 @@ function omakase() {
   const r = J.omakase(S.project);
   Object.assign(S.project, r);
   fontKey = ''; syncUI(); replan(); commit();
-  toast(`おまかせ：${J.STYLES[r.style].name} × ${J.MOODS[r.mood].name}`, r.colors.accentOn ? [r.colors.accent, r.colors.ghostA, r.colors.ghostB] : null);
+  toast(`자동 생성 / 랜덤 추천 (R)：${J.STYLES[r.style].name} × ${J.MOODS[r.mood].name}`, r.colors.accentOn ? [r.colors.accent, r.colors.ghostA, r.colors.ghostB] : null);
   restartPreview();
 }
 // change just one aspect of the current look
@@ -29399,7 +29399,7 @@ function rerollPart(part) {
     if (!pool.length) pool = J.STYLE_ORDER.filter(k => k !== P.style);
     P.style = pool[Math.floor(Math.random() * pool.length)];
     P.colors.enabled = false;
-    msg = `スタイル：${J.STYLES[P.style].name}`;
+    msg = `스타일 (색상/폰트 팩)：${J.STYLES[P.style].name}`;
   } else if (part === 'mood') {
     const r = J.omakase(P);
     Object.assign(P, { mood: r.mood, fx: r.fx, enabled: r.enabled });
@@ -29421,12 +29421,12 @@ function showNow() {
   const cuts = S.plan.cuts.filter(c => c.line >= 0 && c.layout !== 'interlude');
   const kinds = new Set(cuts.map(c => c.layout)).size;
   const row = (k, v) => `<div class="now-row"><span class="k">${k}</span><span class="v">${v}</span></div>`;
-  el.innerHTML = row('スタイル', `<b>${escapeHtml(J.STYLES[P.style].name)}</b>`)
+  el.innerHTML = row('스타일 (색상/폰트 팩)', `<b>${escapeHtml(J.STYLES[P.style].name)}</b>`)
     + row('雰囲気', escapeHtml(moodName))
     + row('配色', `<span class="swatches">${swatchHTML([sc.bg, sc.fg, sc.accent, sc.ghostA, sc.ghostB])}</span>${P.colors.accentOn ? '<span class="tagl">ランダム</span>' : ''}`)
     + row('見出し書体', escapeHtml(fontName))
     + row('構成', `${cuts.length} カット・レイアウト ${kinds} 種`)
-    + row('演出', `加工 ${cuts.filter(c => c.treat && c.treat !== 'none').length}・背景 ${new Set(cuts.map(c => c.bg).filter(b => b && b !== 'none')).size}種・カメラ ${cuts.filter(c => c.cam && c.cam !== 'push').length}`);
+    + row('연출 설정', `加工 ${cuts.filter(c => c.treat && c.treat !== 'none').length}・背景 ${new Set(cuts.map(c => c.bg).filter(b => b && b !== 'none')).size}種・カメラ ${cuts.filter(c => c.cam && c.cam !== 'push').length}`);
 }
 let toastTimer = 0;
 function toast(m, cols) {
@@ -29437,7 +29437,7 @@ function toast(m, cols) {
   toastTimer = setTimeout(() => { el.classList.remove('in'); el.classList.add('out'); toastTimer = setTimeout(() => { el.hidden = true; }, 260); }, 1700);
 }
 
-/* ---------------- かんたん / 詳細 ---------------- */
+/* ---------------- 간편 모드 / 상세 모드 ---------------- */
 function setMode(m) {
   S.mode = m === 'easy' ? 'easy' : 'pro';
   const easy = S.mode === 'easy';
@@ -29490,7 +29490,7 @@ function renderTech() {
     shown.forEach(k => {
       const l = document.createElement('label');
       l.title = k + (tbl[k].tags && tbl[k].tags.length ? '（' + tbl[k].tags.map(t => (J.MOODS[t] ? J.MOODS[t].name : t)).join('・') + '）' : '');
-      if (!J.randomOk(S.project, g, k)) { l.classList.add('set-off'); l.title += tbl[k].extra && S.project.extra !== true ? '（追加分がオフのため、自動では選ばれません）' : '（和風の演出がオフのため、自動では選ばれません）'; }
+      if (!J.randomOk(S.project, g, k)) { l.classList.add('set-off'); l.title += tbl[k].extra && S.project.extra !== true ? '（追加分がオフのため、自動では選ばれません）' : '（和風の연출 설정がオフのため、自動では選ばれません）'; }
       l.innerHTML = `<input type="checkbox" ${en[k] !== false ? 'checked' : ''}> ${escapeHtml(tbl[k].name)}${setBadges(tbl[k])}`;
       l.querySelector('input').addEventListener('change', e => { en[k] = e.target.checked; S.project.mood = null; d.querySelector('.tg-cnt').textContent = `${items.filter(x => en[x] !== false).length}/${items.length}`; replanSoon(60); });
       list.appendChild(l);
@@ -29524,9 +29524,9 @@ function syncOut() {
 async function codecNote() {
   const [w, h] = J.outputSize(S.project);
   const vc = await J.pickVideoCodec(w, h, S.project.fps, 12e6);
-  $('codecNote').textContent = vc ? `このブラウザでは ${vc.label} で書き出します（${w}×${h} / ${S.project.fps}fps）。書き出し中はタブを開いたままにしてください。` : 'このブラウザは動画エンコード（WebCodecs）に対応していません。Chrome / Edge の最新版で開くか、連番PNGを使ってください。';
+  $('codecNote').textContent = vc ? `このブラウザでは ${vc.label} で내보내기 (Export)ます（${w}×${h} / ${S.project.fps}fps）。내보내기 (Export)中はタブを開いたままにしてください。` : 'このブラウザは動画エンコード（WebCodecs）に対応していません。Chrome / Edge の最新版で開くか、連番PNGを使ってください。';
   $('btnMP4').disabled = !vc; $('eMP4').disabled = !vc;
-  if (!vc) $('eMP4').title = 'このブラウザは MP4 書き出しに対応していません（Chrome / Edge 推奨）';
+  if (!vc) $('eMP4').title = 'このブラウザは MP4 내보내기 (Export)に対応していません（Chrome / Edge 推奨）';
 }
 const EXP_BTNS = ['btnMP4', 'btnPNG', 'btnPNGA', 'btnPNGL', 'eMP4'];
 function baseName() {
@@ -29608,7 +29608,7 @@ function bind() {
     remember();
     S.project.lang = e.target.value; replan(); renderFontRoles(); commit(); flushSave();
     const l = J.resolveLang(S.project);
-    toast((S.project.lang === 'auto' ? '歌詞の言語：自動判定 → ' : '歌詞の言語：') + J.LANG_LABEL[l]);
+    toast((S.project.lang === 'auto' ? '가사の言語：自動判定 → ' : '歌詞の言語：') + J.LANG_LABEL[l]);
   });
   $('songTitle').addEventListener('input', e => { S.project.title = e.target.value; replanSoon(300); });
   $('songArtist').addEventListener('input', e => { S.project.artist = e.target.value; replanSoon(300); });
@@ -29648,8 +29648,8 @@ function bind() {
     renderTech(); drawStyleGrid(); replan(); commit(); flushSave();
     toast(e.target.checked ? msgOn : msgOff);
   }));
-  setSwitch('extra-toggle', 'extra', true, '追加分の演出：使う', '追加分の演出：使わない（最初の公開版の演出だけ）');
-  setSwitch('wa-toggle', 'wa', true, '和風の演出：使う', '和風の演出：使わない（おまかせ・シャッフルで選ばれません）');
+  setSwitch('extra-toggle', 'extra', true, '追加分の연출 설정：使う', '追加分の연출 설정：使わない（最初の公開版の연출 설정だけ）');
+  setSwitch('wa-toggle', 'wa', true, '和風の연출 설정：使う', '和風の연출 설정：使わない（자동 생성 / 랜덤 추천 (R)・シャッフルで選ばれません）');
   $('fxKoma').addEventListener('change', e => { const k = +e.target.value; S.project.fx.koma = k; S.project.fx.onTwos = k > 0; S.project.mood = null; replan(); });
   $('fxHud').addEventListener('change', e => { S.project.fx.hud = e.target.value; replan(); });
   $('seed').addEventListener('change', e => { S.project.seed = parseInt(e.target.value, 10) || 0; replan(); });
@@ -29684,7 +29684,7 @@ function bind() {
   ['outKey', 'eKey'].forEach(id => $(id).addEventListener('change', e => {
     S.project.keyBg = e.target.value; syncOut(); replan(); flushSave();
     const k = J.keyMode(S.project);
-    toast(k ? `背景：${k === 'green' ? 'グリーンバック' : 'ブラックバック'}（白い文字と演出だけ）` : '背景：通常（スタイルの配色）');
+    toast(k ? `背景：${k === 'green' ? 'グリーンバック' : 'ブラックバック'}（白い文字と연출 설정だけ）` : '背景：通常（스타일 (색상/폰트 팩)の配色）');
   }));
   $('outAudio').addEventListener('change', e => { S.project.includeAudio = e.target.checked; autosave(); });
   $('btnMP4').addEventListener('click', () => runExport('mp4'));
