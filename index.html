@@ -317,7 +317,11 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
       <button id="modeEasy" aria-pressed="false" title="おまかせボタン中心のシンプルな画面">かんたん</button>
       <button id="modePro" aria-pressed="true" title="すべての設定を表示">詳細</button>
     </div>
-    <nav class="lang-switch" aria-label="言語"><span aria-current="page">日本語</span><a href="en/index.html" lang="en">English</a></nav>
+    <div class="lang-switch">
+  <span class="active">日本語</span> | 
+  <a href="en/">English</a> | 
+  <a href="ko/">한국어</a>
+</div>
     <div class="acts">
       <label class="file" title="保存したプロジェクト(.json)を開く">開く<input id="fileProject" type="file" accept=".json,application/json"></label>
       <button id="btnSave" title="プロジェクトを .json で保存">保存</button>
