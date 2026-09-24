@@ -318,7 +318,11 @@ dialog.terms a { color: var(--cyan); word-break: break-all; }
       <button id="modeEasy" aria-pressed="false" title="A simple workspace focused on automatic creation">Simple</button>
       <button id="modePro" aria-pressed="true" title="Show all settings">Advanced</button>
     </div>
-    <nav class="lang-switch" aria-label="Language"><a href="../index.html" lang="ja">日本語</a><span aria-current="page">English</span></nav>
+    <div class="lang-switch">
+  <a href="../">日本語</a> | 
+  <a href="../en/">English</a> | 
+  <span class="active">한국어</span>
+</div>
     <div class="acts">
       <label class="file" title="Open a saved project (.json)">Open<input id="fileProject" type="file" accept=".json,application/json"></label>
       <button id="btnSave" title="Save project as .json">Save</button>
